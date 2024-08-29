@@ -31,28 +31,27 @@ Hide Windows: Keeps the autoclicker window hidden to avoid detection during game
     `del README.md && del requirements.txt`
 
 ### Usage
-First, change file extension to jpg
-
-`move main.py main.jpg`
-
-Then un the Autoclicker: Execute the script to start the autoclicker.
+Run the Autoclicker: Execute the script to start the autoclicker.
 
 `py main.jpg`
 
 ### FAQ
 Q: How does the self-replacement feature work?
+
 A: The autoclicker can replace its own script with an image file, making it appear as if the script was never executed. This helps to avoid detection during screen sharing.
 
 Q: How do I contribute to this project?
+
 A: Contributions are not currently accepted. However, you are welcome to use and modify the code as needed.
 
 Q: Why does this fork not include all the features present in the original Sharp autoclicker?
+
 A: It is because i wanted to make it simpler and lighter. This clicker has 600 lines of code and is originally based on soda, which has 1300 lines
 
 ### Credits
 Credits to original developer [B4mb0u](https://github.com/B4mb0u/Sharp) for create the clicker
 
-Credits to fork developer [Dream23322](https://github.com/Dream23322/Soda-Autoclicker)
+Credits to fork developer [Dream23322](https://github.com/Dream23322/Soda-Autoclicker). I used your code of base but i think that i didnt use many of your features.
 
 Credits to ChatGPT for do new features 
 
