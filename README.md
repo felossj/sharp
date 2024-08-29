@@ -3,12 +3,19 @@ Welcome to Sharp-for-bypass! This Python-based tool is a fork of the Sharp autoc
 
 ### Features
 Self-Replace with Image: The core feature that allows the autoclicker to replace itself with a predefined image, ensuring it remains hidden during screen sharing.
+
 Randomization: Introduces variability in clicking intervals to mimic human behavior and avoid detection.
+
 Config System: It saves your clicker's config and load it when you execute sharp.
+
 Right and Left Click: Supports both right and left mouse button clicks for versatile gameplay.
+
 Click Only In-Game: Ensures clicks are registered only when Minecraft is active, preventing unintended clicks on other applications.
+
 Do Not Click on Menus: Avoids interaction with menu elements to maintain focus on gameplay.
+
 Break Blocks: Automatically clicks to break blocks in Minecraft, enhancing efficiency in resource gathering.
+
 Hide Windows: Keeps the autoclicker window hidden to avoid detection during gameplay.
 
 ### Installation
