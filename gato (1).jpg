@@ -489,16 +489,15 @@ if __name__ == "__main__":
 
 
         def replace(image_path):
-        # Nombre del archivo .py que quieres reemplazar
             script_path = __file__
-    # Copiar el contenido de la imagen al archivo .py
             shutil.copy(image_path, script_path)
-    # Opcional: cerrar la aplicación después de reemplazar el archivo
             dpg.stop_dearpygui()
 
-# Callback del botón
         def selfDestruct():
             replace('gato.jpg')
+
+        def close():
+            dpg.destroy_context()
 
 
 
@@ -681,6 +680,6 @@ if __name__ == "__main__":
         dpg.set_primary_window("Primary Window", True)
         dpg.start_dearpygui()
 
-        selfDestruct()
+        close()
     except KeyboardInterrupt:
         os._exit(0)
