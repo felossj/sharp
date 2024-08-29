@@ -8,6 +8,8 @@ Randomization: Introduces variability in clicking intervals to mimic human behav
 
 Config System: It saves your clicker's config and load it when you execute sharp.
 
+Click Sounds: You can select your custom click sound.
+
 Right and Left Click: Supports both right and left mouse button clicks for versatile gameplay.
 
 Click Only In-Game: Ensures clicks are registered only when Minecraft is active, preventing unintended clicks on other applications.
@@ -20,11 +22,13 @@ Hide Windows: Keeps the autoclicker window hidden to avoid detection during game
 
 ### Installation
   - Clone the repository:
-    `git clone https://github.com/felo/py-autoclick.git`
+    `git clone https://github.com/felo/sharp.git`
   - Navigate to the project directory:
-    `cd py-autoclick`
+    `cd sharp`
   - Install the required dependencies:
     `pip install -r requirements.txt`
+  - Delete README and requirements
+    `del README.md && del requirements.txt`
 
 ### Usage
 First, change file extension to jpg
