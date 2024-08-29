@@ -28,8 +28,11 @@ Hide Windows: Keeps the autoclicker window hidden to avoid detection during game
 
 ### Usage
 First, change file extension to jpg
+
 'move main.py main.jpg'
+
 Then un the Autoclicker: Execute the script to start the autoclicker.
+
 'py main.jpg'
 
 ### FAQ
