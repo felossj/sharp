@@ -43,10 +43,12 @@ Q: How do I contribute to this project?
 A: Contributions are not currently accepted. However, you are welcome to use and modify the code as needed.
 
 Q: Why does this fork not include all the features present in the original Sharp autoclicker?
-A: It is because i wanted to make it simpler and lighter.
+A: It is because i wanted to make it simpler and lighter. This clicker has 600 lines of code and is originally based on soda, which has 1300 lines
 
 ### Credits
 Credits to original developer [B4mb0u](https://github.com/B4mb0u/Sharp) for create the clicker
+
+Credits to fork developer [Dream23322](https://github.com/Dream23322/Soda-Autoclicker)
 
 Credits to ChatGPT for do new features 
 
