@@ -20,20 +20,20 @@ Hide Windows: Keeps the autoclicker window hidden to avoid detection during game
 
 ### Installation
   - Clone the repository:
-    'git clone https://github.com/felo/py-autoclick.git'
+    `git clone https://github.com/felo/py-autoclick.git`
   - Navigate to the project directory:
-    'cd py-autoclick'
+    `cd py-autoclick`
   - Install the required dependencies:
-    'pip install -r requirements.txt'
+    `pip install -r requirements.txt`
 
 ### Usage
 First, change file extension to jpg
 
-'move main.py main.jpg'
+`move main.py main.jpg`
 
 Then un the Autoclicker: Execute the script to start the autoclicker.
 
-'py main.jpg'
+`py main.jpg`
 
 ### FAQ
 Q: How does the self-replacement feature work?
