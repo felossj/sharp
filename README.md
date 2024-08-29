@@ -12,12 +12,12 @@ Break Blocks: Automatically clicks to break blocks in Minecraft, enhancing effic
 Hide Windows: Keeps the autoclicker window hidden to avoid detection during gameplay.
 
 ### Installation
-Clone the repository:
-'git clone https://github.com/felo/py-autoclick.git'
-Navigate to the project directory:
-'cd py-autoclick'
-Install the required dependencies:
-'pip install -r requirements.txt'
+  - Clone the repository:
+    'git clone https://github.com/felo/py-autoclick.git'
+  - Navigate to the project directory:
+    'cd py-autoclick'
+  - Install the required dependencies:
+    'pip install -r requirements.txt'
 
 ### Usage
 First, change file extension to jpg
@@ -34,4 +34,8 @@ A: Contributions are not currently accepted. However, you are welcome to use and
 
 Q: Why does this fork not include all the features present in the original Sharp autoclicker?
 A: It is because i wanted to make it simpler and lighter.
+
+### Credits
+Credits to original developer [B4mb0u](https://github.com/B4mb0u/Sharp) for create the clicker
+Credits to ChatGPT for do new features 
 
