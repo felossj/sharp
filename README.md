@@ -47,5 +47,6 @@ A: It is because i wanted to make it simpler and lighter.
 
 ### Credits
 Credits to original developer [B4mb0u](https://github.com/B4mb0u/Sharp) for create the clicker
+
 Credits to ChatGPT for do new features 
 
