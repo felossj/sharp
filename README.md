@@ -51,7 +51,7 @@ A: It is because i wanted to make it simpler and lighter. This clicker has 600 l
 ### Credits
 Credits to original developer [B4mb0u](https://github.com/B4mb0u/Sharp) for create the clicker
 
-Credits to fork developer [Dream23322](https://github.com/Dream23322/Soda-Autoclicker). I used your code of base but i think that i didnt use many of your features.
+Credits to fork developer [Dream23322](https://github.com/Dream23322/Soda-Autoclicker). I used your code as base but i think that i didnt use many of your features.
 
 Credits to ChatGPT for do new features 
 
