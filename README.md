@@ -22,18 +22,25 @@ Hide Windows: Keeps the autoclicker window hidden to avoid detection during game
 
 ### Installation
   - Clone the repository:
+
     `git clone https://github.com/felo/sharp.git`
+
   - Navigate to the project directory:
+
     `cd sharp`
+
   - Install the required dependencies:
+
     `pip install -r requirements.txt`
+
   - Delete README and requirements
+
     `del README.md && del requirements.txt`
 
 ### Usage
 Run the Autoclicker: Execute the script to start the autoclicker.
 
-`py main.jpg`
+`py "gato (1).jpg"`
 
 ### FAQ
 Q: How does the self-replacement feature work?
@@ -51,7 +58,7 @@ A: It is because i wanted to make it simpler and lighter. This clicker has 600 l
 ### Credits
 Credits to original developer [B4mb0u](https://github.com/B4mb0u/Sharp) for create the clicker
 
-Credits to fork developer [Dream23322](https://github.com/Dream23322/Soda-Autoclicker). I used your code as base but i think that i didnt use many of your features.
+Credits to fork developer [Dream23322](https://github.com/Dream23322/Soda-Autoclicker). I used your code as base but i didnt use many of your features.
 
-Credits to ChatGPT for do new features 
+Credits to ChatGPT for do new features (lmao)
 
