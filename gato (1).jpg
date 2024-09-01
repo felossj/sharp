@@ -1,4 +1,5 @@
 
+
 try:
     import win32api, win32con, win32gui, win32process, psutil, time, threading, random, winsound, os, json, subprocess, sys, asyncio, itertools, re, keyboard, shutil
     import dearpygui.dearpygui as dpg
@@ -59,7 +60,9 @@ class clicker():
                 "shakeEffectForce": 5,
                 "soundPath": "",
                 "workInMenus": False,
-                "blatant": False
+                "blatant": False,
+                "blockHit": False,
+                "blockHitChance": 20
             },
             "right": {
                 "enabled": False,
@@ -211,7 +214,11 @@ class clicker():
                 win32api.SendMessage(self.window, win32con.WM_LBUTTONDOWN, 0, 0)
                 time.sleep(0.02)
                 win32api.SendMessage(self.window, win32con.WM_LBUTTONUP, 0, 0)
-
+            if self.config["left"]["blockHit"] or (self.config["left"]["blockHit"] and self.config["right"]["enabled"] and self.config["right"]["LMBLock"] and not win32api.GetAsyncKeyState(0x02) < 0):
+                if random.uniform(0, 1) <= self.config["left"]["blockHitChance"] / 100.0:
+                    win32api.SendMessage(self.window, win32con.WM_RBUTTONDOWN, 0, 0)
+                    time.sleep(0.02)
+                    win32api.SendMessage(self.window, win32con.WM_RBUTTONUP, 0, 0)     
     
         else:
             if self.config["left"]["breakBlocks"]:
@@ -222,6 +229,13 @@ class clicker():
                 win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
                 time.sleep(0.02)
                 win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
+            if self.config["left"]["blockHit"] or (self.config["left"]["blockHit"] and self.config["right"]["enabled"] and self.config["right"]["LMBLock"] and not win32api.GetAsyncKeyState(0x02) < 0):
+                if random.uniform(0, 1) <= self.config["left"]["blockHitChance"] / 100.0:
+                    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, 0, 0)
+                    time.sleep(0.02)
+                    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, 0, 0)
+        if self.config["left"]["soundPath"] != "" and os.path.isfile(self.config["left"]["soundPath"]):
+            winsound.PlaySound(self.config["left"]["soundPath"], winsound.SND_ASYNC)
 
 
         if self.config["left"]["shakeEffect"]:
@@ -305,19 +319,7 @@ class clicker():
             time.sleep(0.02)
             win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, 0, 0)
 
-        if self.config["right"]["shakeEffect"]:
-            currentPos = win32api.GetCursorPos()
-            direction = random.randint(0, 3)
-            pixels = random.randint(-self.config["right"]["shakeEffectForce"], self.config["right"]["shakeEffectForce"])
-
-            if direction == 0:
-                win32api.SetCursorPos((currentPos[0] + pixels, currentPos[1] - pixels))
-            elif direction == 1:
-                win32api.SetCursorPos((currentPos[0] - pixels, currentPos[1] + pixels))
-            elif direction == 2:
-                win32api.SetCursorPos((currentPos[0] + pixels, currentPos[1] + pixels))
-            elif direction == 3:
-                win32api.SetCursorPos((currentPos[0] - pixels, currentPos[1] - pixels))
+        
 
     def rightBindListener(self):
         while True:
@@ -482,8 +484,10 @@ if __name__ == "__main__":
 
         def toggleRightWorkInMenus(id: int, value: bool):
             clickerClass.config["right"]["workInMenus"] = value
-
-        
+        def toggleLeftBlockHit(id: int, value: bool):
+            clickerClass.config["left"]["blockHit"] = value
+        def setLeftBlockHitChance(id: int, value: int):
+            clickerClass.config["left"]["blockHitChance"] = value
         def setTheme(id: int, value: str):
             clickerClass.config["misc"]["theme"] = value
 
@@ -532,6 +536,7 @@ if __name__ == "__main__":
                 dpg.delete_item("Hide GUI Bind Handler")
 
                 waitingForKeyHideGUI = False
+
 
 
         def toggleSaveSettings(id: int, value: bool):
@@ -597,15 +602,20 @@ if __name__ == "__main__":
 
 
         
-                    checkboxLeftShakeEffect = dpg.add_checkbox(label="jitter", default_value=clickerClass.config["left"]["shakeEffect"], callback=toggleLeftShakeEffect)
-                    sliderLeftShakeEffectForce = dpg.add_slider_int(label="jitter force", default_value=clickerClass.config["left"]["shakeEffectForce"], min_value=1, max_value=20, callback=setLeftShakeEffectForce)
-              
+                    
 
 
                     checkboxLeftOnlyWhenFocused = dpg.add_checkbox(label="only in game", default_value=clickerClass.config["left"]["onlyWhenFocused"], callback=toggleLeftOnlyWhenFocused)
                     checkboxLeftWorkInMenus = dpg.add_checkbox(label="work in menus", default_value=clickerClass.config["left"]["workInMenus"], callback=toggleLeftWorkInMenus)
                     checkBoxLeftBreakBlocks = dpg.add_checkbox(label="break blocks", default_value=clickerClass.config["left"]["breakBlocks"], callback=toggleLeftBreakBlocks)
-                    
+                with dpg.tab(label="config"):
+                    dpg.add_spacer(width=75)
+                    checkboxLeftBlockHit = dpg.add_checkbox(label="blockhit", default_value=clickerClass.config["left"]["blockHit"], callback=toggleLeftBlockHit)
+                    sliderLeftBlockHitChance = dpg.add_slider_int(label="chance", default_value=clickerClass.config["left"]["blockHitChance"], min_value=1, max_value=100, callback=setLeftBlockHitChance)
+                    checkboxLeftShakeEffect = dpg.add_checkbox(label="jitter", default_value=clickerClass.config["left"]["shakeEffect"], callback=toggleLeftShakeEffect)
+                    sliderLeftShakeEffectForce = dpg.add_slider_int(label="jitter force", default_value=clickerClass.config["left"]["shakeEffectForce"], min_value=1, max_value=20, callback=setLeftShakeEffectForce)
+              
+                    dpg.add_spacer(width=125)
                     
                 with dpg.tab(label="right"):
                     dpg.add_spacer(width=75)
@@ -619,11 +629,6 @@ if __name__ == "__main__":
 
                     
                     sliderRightAverageCPS = dpg.add_slider_int(label="average cps", default_value=clickerClass.config["right"]["averageCPS"], min_value=1, max_value=40,callback=setRightAverageCPS)
-
-                    
-                    checkboxRightShakeEffect = dpg.add_checkbox(label="jitter", default_value=clickerClass.config["right"]["shakeEffect"], callback=toggleRightShakeEffect)
-                    sliderRightShakeEffectForce = dpg.add_slider_int(label="jitter force", default_value=clickerClass.config["right"]["shakeEffectForce"], min_value=1, max_value=20, callback=setRightShakeEffectForce)
-
                     
                     checkboxRightOnlyWhenFocused = dpg.add_checkbox(label="only in game", default_value=clickerClass.config["right"]["onlyWhenFocused"], callback=toggleRightOnlyWhenFocused)
                     checkboxRightWorkInMenus = dpg.add_checkbox(label="work in menus", default_value=clickerClass.config["right"]["workInMenus"], callback=toggleRightWorkInMenus)
