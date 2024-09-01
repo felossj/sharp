@@ -1,25 +1,18 @@
-
-
 try:
-    import win32api, win32con, win32gui, win32process, psutil, time, threading, random, winsound, os, json, subprocess, sys, asyncio, itertools, re, keyboard, shutil
+    import win32api, win32con, win32gui, win32process, psutil, time, threading, random, winsound, os, json, subprocess, sys, shutil
     import dearpygui.dearpygui as dpg
-    from pypresence import Presence
 except:
     from os import system
     system("pip install -r requirements.txt")
-    import win32api, win32con, win32gui, win32process, psutil, time, threading, random, winsound, os, json, subprocess, sys, asyncio, itertools, re, keyboard, shutil
+    import win32api, win32con, win32gui, win32process, psutil, time, threading, random, winsound, os, json, subprocess, sys, shutil
     import dearpygui.dearpygui as dpg
-    from pypresence import Presence
 
 current_key = None
 class configListener(dict): # Detecting changes to config
     def __init__(self, initialDict):
         for k, v in initialDict.items():
             if isinstance(v, dict):
-                initialDict[k] = configListener(v)
-
-
-              
+                initialDict[k] = configListener(v)           
         super().__init__(initialDict)
 
     def __setitem__(self, item, value):
@@ -27,7 +20,6 @@ class configListener(dict): # Detecting changes to config
             _value = configListener(value)
         else:
             _value = value
-
         super().__setitem__(item, _value)
 
         try: # Trash way of checking if clicker class is initialized
@@ -36,11 +28,9 @@ class configListener(dict): # Detecting changes to config
             while True:
                 try:
                     clickerClass
-
                     break
                 except:
                     time.sleep(0.1)
-
                     pass
 
         if clickerClass.config["misc"]["saveSettings"]:
@@ -90,27 +80,6 @@ class clicker():
                 "saveSettings": True,
                 "guiHidden": True,
                 "bindHideGUI": 45,
-                "discordRichPresence": False,
-                "rodBind": 0,
-                "rodDelay": 0.2,
-                "rodSlot": "2",
-                "pearlBind": 0,
-                "pearlSlot": "8",
-                "movementFix": False,
-                "swordSlot": "1",
-                "theme": "dark",
-                "red": 0,
-                "green": 0,
-                "blue": 0,
-            },
-            "potions": {
-                "enabled": False,
-                "potBind": 0,
-                "throwDelay": 0.7,
-                "switchBackSlot": "1",
-                "potResetBind": 0,
-                "lowestSlot": 1,
-                "highestSlot": 9
             }
         }
         self.current_pot_slot = 0 
@@ -136,7 +105,6 @@ class clicker():
 
         self.config = configListener(self.config)
 
-        self.record = itertools.cycle(self.config["recorder"]["record"])
 
         
         threading.Thread(target=self.windowListener, daemon=True).start()
@@ -236,6 +204,7 @@ class clicker():
                     win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, 0, 0)
         if self.config["left"]["soundPath"] != "" and os.path.isfile(self.config["left"]["soundPath"]):
             winsound.PlaySound(self.config["left"]["soundPath"], winsound.SND_ASYNC)
+        
 
 
         if self.config["left"]["shakeEffect"]:
@@ -375,7 +344,7 @@ class clicker():
 if __name__ == "__main__":
     try:
         if os.name != "nt":
-            input("clicker Autoclicker is only working on Windows.")
+            input("clicker is only working on Windows.")
 
             os._exit(0)
 
@@ -488,22 +457,15 @@ if __name__ == "__main__":
             clickerClass.config["left"]["blockHit"] = value
         def setLeftBlockHitChance(id: int, value: int):
             clickerClass.config["left"]["blockHitChance"] = value
-        def setTheme(id: int, value: str):
-            clickerClass.config["misc"]["theme"] = value
-
 
         def replace(image_path):
             script_path = __file__
             shutil.copy(image_path, script_path)
             dpg.stop_dearpygui()
-
         def selfDestruct():
             replace('gato.jpg')
-
         def close():
             dpg.destroy_context()
-
-
 
         waitingForKeyHideGUI = False
         def statusBindHideGUI():
@@ -517,15 +479,6 @@ if __name__ == "__main__":
 
                 waitingForKeyHideGUI = True
 
-        # set RGB
-        def setRed(id: int, value: int):
-            clickerClass.config["misc"]["red"] = value
-
-        def setGreen(id: int, value: int):
-            clickerClass.config["misc"]["green"] = value
-
-        def setBlue(id: int, value: int):
-            clickerClass.config["misc"]["blue"] = value 
         def setBindHideGUI(id: int, value: str):
             global waitingForKeyHideGUI
 
@@ -537,55 +490,24 @@ if __name__ == "__main__":
 
                 waitingForKeyHideGUI = False
 
-
-
         def toggleSaveSettings(id: int, value: bool):
             clickerClass.config["misc"]["saveSettings"] = value
-
-        def toggleAlwaysOnTop(id: int, value: bool):
-            if value:
-                win32gui.SetWindowPos(guiWindows, win32con.HWND_TOPMOST, 0, 0, 0, 0, win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
-            else:
-                win32gui.SetWindowPos(guiWindows, win32con.HWND_NOTOPMOST, 0, 0, 0, 0, win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
 
         def themeToRGB(theme: str):
             try:
                 themeMap = {
                     "dark": (40, 40, 40),
-                    "purple": (181, 92, 224),
-                    "blue": (58, 110, 230),
-                    "lightblue": (113, 190, 235),
-                    "red": (222, 90, 90),
                 }
 
                 return themeMap[theme]
             except:
                 return None
-        with dpg.theme() as container_theme:
-            if(clickerClass.config["misc"]["theme"] != "custom"):
-                rgb_data = themeToRGB(clickerClass.config["misc"]["theme"])
-            else:
-                rgb_data = (clickerClass.config["misc"]["red"], clickerClass.config["misc"]["green"], clickerClass.config["misc"]["blue"])
-            with dpg.theme_component(dpg.mvAll):
-                dpg.add_theme_color(dpg.mvThemeCol_Tab, rgb_data, category=dpg.mvThemeCat_Core)
-                dpg.add_theme_color(dpg.mvThemeCol_TabHovered, rgb_data, category=dpg.mvThemeCat_Core)
-                dpg.add_theme_color(dpg.mvThemeCol_TabActive, rgb_data, category=dpg.mvThemeCat_Core),
-                dpg.add_theme_color(dpg.mvThemeCol_CheckMark, rgb_data, category=dpg.mvThemeCat_Core)
-                dpg.add_theme_color(dpg.mvThemeCol_SliderGrab, rgb_data, category=dpg.mvThemeCat_Core)
-                dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, rgb_data, category=dpg.mvThemeCat_Core)
-                dpg.add_theme_color(dpg.mvThemeCol_ScrollbarGrab, rgb_data, category=dpg.mvThemeCat_Core)
-                if(clickerClass.config["misc"]["theme"] == "light"):
-                    # Set all items to white except text
-                    dpg.add_theme_color(dpg.mvThemeCol_Text, (0, 0, 0), category=dpg.mvThemeCat_Core)
-                    dpg.add_theme_color(dpg.mvThemeCol_WindowBg, (230, 230, 230), category=dpg.mvThemeCat_Core)
-                    dpg.add_theme_color(dpg.mvThemeCol_FrameBg, rgb_data, category=dpg.mvThemeCat_Core)
-                    dpg.add_theme_color(dpg.mvThemeCol_Button, rgb_data, category=dpg.mvThemeCat_Core)
         def main():
              dpg.create_context()
         dpg.create_viewport(title=f"$$$", width=360, height=250,resizable=False)
 
         with dpg.window(tag="Primary Window",no_resize=True):
-            dpg.bind_item_theme("Primary Window", container_theme)
+            dpg.bind_item_theme("Primary Window", theme = (40,40,40))
             with dpg.tab_bar():
                 with dpg.tab(label="left"):
                     dpg.add_spacer(width=75)
@@ -635,9 +557,7 @@ if __name__ == "__main__":
                     
                 with dpg.tab(label="misc"):
                     dpg.add_spacer(width=75)
-                    buttonSelfDestruct = dpg.add_button(label="destruct", callback=selfDestruct)
-
-                    
+                    inputLeftClickSoundPath = dpg.add_input_text(label="click sound", default_value=clickerClass.config["left"]["soundPath"], hint="ex: mysong/0800.wav", callback=setLeftClickSoundPath)
                     with dpg.group(horizontal=True):
                         buttonBindHideGUI = dpg.add_button(label="click to bind", callback=statusBindHideGUI)
                         hideGUIText = dpg.add_text(default_value="hide")
@@ -645,36 +565,13 @@ if __name__ == "__main__":
                         bind = clickerClass.config["misc"]["bindHideGUI"]
                         if bind != 0:
                             dpg.set_item_label(buttonBindHideGUI, f"bind: {chr(bind)}")
-
-                   
-                    dpg.add_combo(label="theme (restart)", items=["light", "dark", "blue", "red", "purple", "lightblue"], default_value=clickerClass.config["misc"]["theme"], callback=setTheme)
-                    inputLeftClickSoundPath = dpg.add_input_text(label="click sound", default_value=clickerClass.config["left"]["soundPath"], hint="ex: mysong/0800.wav", callback=setLeftClickSoundPath)
-                    
-                    dpg.add_spacer(width=75)    
+                    buttonSelfDestruct = dpg.add_button(label="destruct", callback=selfDestruct)
+                    dpg.add_spacer(width=75)
                     dpg.add_separator()
                     dpg.add_spacer(width=75)
                     creditsText = dpg.add_text(default_value="credits: felo (skidder)")
-                    githubText = dpg.add_text(default_value="youtube.com/@felossj")
-                    
-        with dpg.theme() as global_theme:
-            with dpg.theme_component(dpg.mvAll):
-                dpg.add_theme_style(dpg.mvStyleVar_WindowBorderSize, 0)
-                dpg.add_theme_style(dpg.mvStyleVar_FrameRounding, 4)
-                dpg.add_theme_style(dpg.mvStyleVar_GrabRounding, 1)
-                dpg.add_theme_style(dpg.mvStyleVar_GrabMinSize, 20)
-                dpg.add_theme_style(dpg.mvStyleVar_TabRounding, 1)
-                dpg.add_theme_color(dpg.mvThemeCol_TabActive, (107, 110, 248))
-                dpg.add_theme_color(dpg.mvThemeCol_TabHovered, (107, 110, 248))
-                dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, (107, 110, 248))
-                dpg.add_theme_color(dpg.mvThemeCol_CheckMark, (107, 110, 248))
-                dpg.add_theme_color(dpg.mvThemeCol_ScrollbarGrabHovered, (107, 110, 248))
-                dpg.add_theme_color(dpg.mvThemeCol_ScrollbarGrabActive, (107, 110, 248))
-                dpg.add_theme_color(dpg.mvThemeCol_SliderGrab, (107, 110, 248))
-                dpg.add_theme_color(dpg.mvThemeCol_SliderGrabActive, (107, 110, 248))
-                dpg.add_theme_color(dpg.mvThemeCol_FrameBgHovered, (71, 71, 77))
-                dpg.add_theme_color(dpg.mvThemeCol_HeaderHovered, (71, 71, 77))
+                    creditsText = dpg.add_text(default_value="youtube.com/@felossj")
 
-        dpg.bind_theme(global_theme)
 
         dpg.create_context()
         dpg.show_viewport()
