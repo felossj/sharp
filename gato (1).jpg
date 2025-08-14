@@ -50,6 +50,7 @@ class clicker():
                 "shakeEffectForce": 5,
                 "soundPath": "",
                 "workInMenus": False,
+                "clickInInventory": False,
                 "blatant": False,
                 "blockHit": False,
                 "blockHitChance": 20
@@ -158,11 +159,11 @@ class clicker():
 
                         continue
 
-                    if not self.config["left"]["workInMenus"]:
-                        cursorInfo = win32gui.GetCursorInfo()[1]
-                        if cursorInfo > 50000 and cursorInfo < 100000:
+                if not self.config["left"]["workInMenus"]:
+                    cursorInfo = win32gui.GetCursorInfo()[1]
+                    if cursorInfo > 50000 and cursorInfo < 100000:
+                        if not self.config["left"]["clickInInventory"]:
                             time.sleep(delay)
-
                             continue
 
                 if self.config["left"]["onlyWhenFocused"]:
@@ -528,7 +529,9 @@ if __name__ == "__main__":
 
 
                     checkboxLeftOnlyWhenFocused = dpg.add_checkbox(label="only in game", default_value=clickerClass.config["left"]["onlyWhenFocused"], callback=toggleLeftOnlyWhenFocused)
+                    
                     checkboxLeftWorkInMenus = dpg.add_checkbox(label="work in menus", default_value=clickerClass.config["left"]["workInMenus"], callback=toggleLeftWorkInMenus)
+                    checkboxLeftClickInInventory = dpg.add_checkbox(label="click in inventory", default_value=clickerClass.config["left"]["clickInInventory"], callback=lambda s, a: clickerClass.config["left"].__setitem__("clickInInventory", a))
                     checkBoxLeftBreakBlocks = dpg.add_checkbox(label="break blocks", default_value=clickerClass.config["left"]["breakBlocks"], callback=toggleLeftBreakBlocks)
                 with dpg.tab(label="config"):
                     dpg.add_spacer(width=75)
